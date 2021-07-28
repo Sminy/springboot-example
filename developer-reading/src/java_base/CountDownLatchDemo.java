@@ -1,4 +1,4 @@
-package javabase;
+package java_base;
 
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;

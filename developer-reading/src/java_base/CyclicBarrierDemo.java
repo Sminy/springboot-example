@@ -1,4 +1,4 @@
-package javabase;
+package java_base;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
