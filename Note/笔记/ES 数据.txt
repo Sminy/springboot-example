@@ -1,0 +1,94 @@
+### 新增JSON数据
+
+PUT /book/_doc/1 
+{
+  "name":"西游记",
+  "book_no": "NC_128389123",
+  "description":"中国古典小说四大名剧之一",
+  "author": "吴承恩",
+  "price": 58.80,
+  "timestamp": "2021-07-06 16:57:58",
+  "tags": ["book", "novel"]
+}
+
+PUT /book/_doc/2
+{
+  "name":"红楼梦",
+  "book_no": "NC_128389125",
+  "description":"中国古典小说四大名剧之一",
+  "author": "曹雪芹",
+  "price": 99.80,
+  "timestamp": "2021-07-06 16:57:58",
+  "tags": ["book", "novel"]
+}
+
+PUT /book/_doc/3 
+{
+  "name":"莎士比亚全集",
+  "book_no": "NC_128389123",
+  "description":"世界名剧",
+  "author": "威廉.莎士比亚",
+  "price": 558.79,
+  "timestamp": "2021-07-06 16:57:58",
+  "tags": ["book", "novel"]
+}
+
+PUT /book/_doc/4 
+{
+  "name":"三体",
+  "book_no": "NC_1201010200",
+  "description":"中国现代科幻小说",
+  "author": "刘慈欣",
+  "price": 158.80,
+  "timestamp": "2021-07-06 16:57:58",
+  "tags": ["book", "novel"]
+}
+
+PUT /book/_doc/5 
+{
+  "name":"百年孤独",
+  "book_no": "NC_1101010208",
+  "description":"百年孤独精装 诺贝尔文学奖获得者加西亚马尔克斯代表作 世界名著文学图书籍外国文学文艺",
+  "author": "马尔克斯",
+  "price": 223.80,
+  "timestamp": "2021-07-06 16:57:58",
+  "tags": ["book", "novel"]
+}
+
+
+PUT /book/_doc/6 
+{
+  "name":"微服务架构实战",
+  "book_no": "NC_1101010209",
+  "description":"基于springBoot+SpringCloud+Docker的微服务架构实战",
+  "author": "佚名",
+  "price": 19.80,
+  "timestamp": "2021-07-06 16:57:58",
+  "tags": ["Java", "IT"]
+}
+
+### 强制创建
+
+PUT /book/_doc/6/_create 
+
+## 修改doc文档
+POST /book/_doc/2/_update
+{
+ "doc": {
+    "name":"java 高级编程珠玑",
+    "tags": ["java", "编程"]
+ }
+}
+
+### 删除文档
+DELETE /book/_doc/2
+
+
+### 查询指定字段
+GET /book/_doc/3?_source_includes=name,price,book_no
+
+### 查询所有
+GET /book/_search
+
+### 查询匹配指定字段
+GET /book/_search?q=tags:book
