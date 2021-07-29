@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
  */
 public class OOMEMetaspaceDemo {
 
+    static class OOMObject { }
+
     public static void main(String[] args) {
         int i = 0;
         try {
@@ -18,7 +20,7 @@ public class OOMEMetaspaceDemo {
                 i++;
                 // 使用Spring的动态字节码技术
                 Enhancer enhancer = new Enhancer();
-                enhancer.setSuperclass(OOMEMetaspaceDemo.class);
+                enhancer.setSuperclass(OOMObject.class);
                 enhancer.setUseCache(false);
                 enhancer.setCallback(new MethodInterceptor() {
                     @Override
