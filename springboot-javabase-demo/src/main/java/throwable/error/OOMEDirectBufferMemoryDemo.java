@@ -1,9 +1,6 @@
 package throwable.error;
 
 
-
-import jdk.internal.misc.VM;
-
 import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class OOMEDirectBufferMemoryDemo {
     public static void main(String[] args) throws InterruptedException {
-        System.out.println(String.format("配置的maxDirectMemory: %.2f MB", VM.maxDirectMemory() / 1024.0 /1024));
+//        System.out.println(String.format("配置的maxDirectMemory: %.2f MB", VM.maxDirectMemory() / 1024.0 /1024));
         TimeUnit.SECONDS.sleep(3);
         ByteBuffer allocate = ByteBuffer.allocate(40 * 1024 * 1024); // 分配堆内内存
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(40 * 1024 * 1024); // 分配堆外内存，本地直接内存
