@@ -1,0 +1,18 @@
+服务器：ssh测试服务器账号
+192.168.10.161
+root / app@20210302
+
+
+本地打包：gradle jib -DsendCredentialsOverHttp=true -Djib.httpTimeout=0
+
+ 后台Docker部署：
+0. 提交代码，Jenkins打包至仓库
+
+1. 拉取镜像
+docker pull  nexus.xhd.cn:8082/contract/newchannel-contract:latest
+
+2. 停止正在运行的镜像
+docker stop newchannel-contract
+
+3. 启动
+docker run -d -p 9906:9906 --name newchannel-contract --rm  -v /opt/fonts:/app/fonts -e "JAVA_TOOL_OPTIONS=-Duser.timezone=Asia/Shanghai -Dspring.profiles.active=test" -e  "CONTRACT_MYSQL_URL=jdbc:mysql://192.168.10.160:3306/contract_test?useUnicode=true&characterEncoding=utf8" -e "CONTRACT_REDIS_HOST=192.168.10.160" -e "CONTRACT_REDIS_SELECT=4" -e "CONTRACT_FONT_PATH=/app/fonts" nexus.xhd.cn:8082/contract/newchannel-contract
