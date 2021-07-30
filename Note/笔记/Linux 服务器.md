@@ -54,7 +54,15 @@ vmstat -n 2 3
 
 
 
-### 4. pid cpu
+### 4. pidstat
+
+pidstat是sysstat工具的一个命令，用于监控全部或指定进程的cpu、内存、线程、设备IO等系统资源的占用情况
+
+```
+pidstat [ 选项 ] [ <时间间隔> ] [ <次数> ]
+```
+
+**安装sysstat 模块：**
 
 1. 服务端安装 sysstat 模块 yum install sysstat
 2. ps -ef|grep java
@@ -62,13 +70,49 @@ vmstat -n 2 3
 
 
 
-查看所有cpu核信息：
+**常用的参数：**
+
+- -u：默认的参数，显示各个进程的cpu使用统计
+- -r：显示各个进程的内存使用统计
+- -d：显示各个进程的IO使用情况
+- -p：指定进程号
+- -w：显示每个进程的上下文切换情况
+- -t：显示选择任务的线程的统计信息外的额外信息
+- -T { TASK | CHILD | ALL }
+   这个选项指定了pidstat监控的。TASK表示报告独立的task，CHILD关键字表示报告进程下所有线程统计信息。ALL表示报告独立的task和task下面的所有线程。
+   注意：task和子线程的全局的统计信息和pidstat选项无关。这些统计信息不会对应到当前的统计间隔，这些统计信息只有在子线程kill或者完成的时候才会被收集。
+- -V：版本号
+- -h：在一行上显示了所有活动，这样其他程序可以容易解析。
+- -I：在SMP环境，表示任务的CPU使用率/内核数量
+- -l：显示命令名和所有参数
+
+
+
+1. 查看所有进程cpu使用情况：
 
 ```
 mpstat -P ALL 2
 ```
 
+2.  cpu 使用情况统计
 
+   ```
+   pidstat -u
+   ```
+
+3.  内存使用情况
+
+   ```
+   pidstat -r
+   ```
+
+4.  查看某个进程每隔2秒统计cpu使用情况
+
+   ```
+   pidstat -u 2 -p 31670
+   ```
+
+   
 
 ### 5.  free 内存
 
@@ -133,3 +177,54 @@ ifstat -a
 ```
 
 ![image-20210729180333556](.\img\linux_ifstat.png)
+
+
+
+### CPU占用过高的定位分析思路
+
+结合Linux和JDK命令一块分析
+
+案例步骤
+
+- 先用top命令找出CPU占比最高的
+
+  ```
+  1、top
+  2、shift + p 查看cpu 占用最高的进程
+  ```
+
+  ![img](D:\IdeaProjects\springboot-xxx-example\Note\笔记\img\linux_top_cpu.png)
+
+  
+
+- ps -ef或者jps进一步定位，得知是一个怎么样的一个后台程序作搞屎棍
+
+  ```
+  jps -l
+  ```
+
+  ```
+  ps -ef | grep java |grep -v grep
+  ```
+
+- 定位到具体线程或者代码
+
+  - ps -mp 进程 -o THREAD,tid,time  
+
+    ```shell
+    ps -mp pid -o THREAD,tid,time
+    ```
+
+    - -m 显示所有的线程
+    - -p pid进程使用cpu的时间
+    - -o 该参数后是用户自定义格式
+
+  ![img](D:\IdeaProjects\springboot-xxx-example\Note\笔记\img\linux_psmp.png)
+
+- 将需要的线程ID转换为16进制格式（英文小写格式），命令printf %x 172 将172转换为十六进制
+
+- ```
+  jstack 进程ID | grep tid（16进制线程ID小写英文）-A60
+  ```
+
+  
