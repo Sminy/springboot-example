@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'cn.shenxl'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'cglib:cglib:3.3.0'
+}
+
+test {
+    useJUnitPlatform()
+}

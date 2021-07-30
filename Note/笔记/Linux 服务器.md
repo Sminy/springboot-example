@@ -193,7 +193,7 @@ ifstat -a
   2、shift + p 查看cpu 占用最高的进程
   ```
 
-  ![img](D:\IdeaProjects\springboot-xxx-example\Note\笔记\img\linux_top_cpu.png)
+  ![img](.\img\linux_top_cpu.png)
 
   
 
