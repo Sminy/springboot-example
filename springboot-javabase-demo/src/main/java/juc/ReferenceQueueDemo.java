@@ -1,4 +1,4 @@
-package base.concurrent;
+package juc;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;

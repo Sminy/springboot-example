@@ -1,4 +1,4 @@
-package base.test;
+package string;
 
 /**
  *  字符串操作:

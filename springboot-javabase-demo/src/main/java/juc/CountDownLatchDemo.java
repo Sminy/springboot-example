@@ -1,4 +1,4 @@
-package base.concurrent;
+package juc;
 
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;

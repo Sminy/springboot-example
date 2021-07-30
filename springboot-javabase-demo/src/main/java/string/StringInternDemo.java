@@ -1,4 +1,4 @@
-package base.test;
+package string;
 
 /**
  *  有一个初始化的Java字符串（JDK出娘胎自带的），在加载sun.misc.Version这个类的时候进入常量池。
